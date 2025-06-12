@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | ServeX - Find Trusted Services Near You</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Section Dividers */
+        .wave-divider {
+            position: relative;
+            height: 60px;
+            width: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .wave-divider svg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+        }
+        
+        .wave-flip {
+            transform: rotate(180deg);
+        }
+        
+        .wave-green {
+            fill: #e8f5e9;
+        }
+        
+        .wave-white {
+            fill: white;
+        }
+        
+        .wave-gray-50 {
+            fill: #f9fafb; /* tailwind gray-50 */
+        }
+        
+        .wave-gray-800 {
+            fill: #1f2937; /* tailwind gray-800 */
+        }
+        
+        nav.scrolled {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+        .contact-gradient {
+            background: linear-gradient(135deg, #c8e6c9 0%, #e8f5e9 100%);
+        }
+        .card {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.03);
+            border-radius: 12px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, box-shadow;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05), 0 12px 28px rgba(0,0,0,0.08);
+        }
+        .nav-link {
+            transition: color 0.2s ease;
+        }
+        .nav-link:hover {
+            color: #5F9E63 !important;
+        }
+        .btn-primary, .btn-outline {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, background-color;
+            border-radius: 10px;
+        }
+        .btn-primary {
+            background-color: #5F9E63;
+        }
+        .btn-primary:hover {
+            background-color: #4d8b51;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 4px 12px rgba(95, 158, 99, 0.25);
+        }
+        .btn-outline {
+            border: 2px solid #5F9E63;
+        }
+        .btn-outline:hover {
+            background-color: #5F9E63;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(95, 158, 99, 0.15);
+        }
+        input, select, textarea {
+            transition: all 0.2s ease;
+            border-radius: 10px !important;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #66bb6a !important;
+            box-shadow: 0 0 0 3px rgba(102, 187, 106, 0.2) !important;
+        }
+        .map-container {
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .animate-fade-up {
+            animation: fadeUp 0.6s ease-out forwards;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .contact-info-item:hover {
+            background-color: rgba(95, 158, 99, 0.05);
+            transform: scale(1.02);
+        }
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: #5F9E63;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5F9E63',
+                        'primary-dark': '#4d8b51'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm py-3 px-6 z-50 transition-all duration-300">
+        <div class="max-w-[90rem] mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="index.html">
+                    <img src="https://i.imgur.com/YueOjCR.jpg" alt="ServeX Logo" class="h-48 rounded-lg">
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="text-gray-600 hover:text-green-500 nav-link font-medium">Home</a>
+                <a href="index.html#services" class="text-gray-600 hover:text-green-500 nav-link font-medium">Services</a>
+                <a href="index.html#providers" class="text-gray-600 hover:text-green-500 nav-link font-medium">Providers</a>
+                <a href="index.html#how-it-works" class="text-gray-600 hover:text-green-500 nav-link font-medium">How It Works</a>
+                <a href="contact.html" class="text-green-500 nav-link font-medium border-b-2 border-green-500">Contact</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="hidden md:block text-gray-600 hover:text-green-500 font-medium">Login</a>
+                <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full font-medium btn-primary">
+                    Sign Up
+                </button>
+                <button class="md:hidden text-gray-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Hero Section -->
+    <section class="contact-gradient py-16 md:py-20 px-6 animate-on-scroll">
+        <div class="max-w-[90rem] mx-auto text-center">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-6">
+                    We're Here to Help
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                    Have questions, feedback, or need support? Our team is ready to assist you.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#contact-form" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-medium">
+                        <i class="fas fa-paper-plane mr-2"></i> Send us a Message
+                    </a>
+                    <a href="tel:+18005551234" class="bg-white hover:bg-gray-100 text-green-500 border-2 border-green-500 px-6 py-3 rounded-full font-medium">
+                        <i class="fas fa-phone mr-2"></i> Call Us Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wave Divider -->
+    <div class="wave-divider">
+        <svg class="wave-gray-800" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.55,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5"></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"></path>
+        </svg>
+    </div>
+
+    <!-- Contact Information -->
+    <section class="py-16 bg-gray-800 px-6">
+        <div class="max-w-[90rem] mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white mb-4">Get In Touch</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">Choose your preferred way to contact us or visit our headquarters</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Contact Card 1 -->
+                <div class="bg-gray-700 rounded-xl p-8 card contact-info-item">
+                    <div class="service-icon bg-green-100 mx-auto">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Our Headquarters</h3>
+                    <p class="text-green-300 mb-4">
+                        123 Service Avenue<br>
+                        Techville, CA 12345
+                    </p>
+                    <a href="#" class="inline-block text-green-400 hover:text-white">
+                        <i class="fas fa-directions mr-2"></i> Get Directions
+                    </a>
+                </div>
+                
+                <!-- Contact Card 2 -->
+                <div class="bg-gray-700 rounded-xl p-8 card contact-info-item">
+                    <div class="service-icon bg-green-100 mx-auto">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Call Us</h3>
+                    <p class="text-green-300 mb-4">
+                        Customer Support: (800) 555-1234<br>
+                        Provider Support: (800) 555-5678
+                    </p>
+                    <p class="text-gray-400 text-sm">Mon-Fri: 8am-8pm | Sat: 9am-5pm</p>
+                </div>
+                
+                <!-- Contact Card 3 -->
+                <div class="bg-gray-700 rounded-xl p-8 card contact-info-item">
+                    <div class="service-icon bg-green-100 mx-auto">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Email Us</h3>
+                    <p class="text-green-300 mb-4">
+                        General Inquiries: hello@servex.com<br>
+                        Support: support@servex.com
+                    </p>
+                    <p class="text-gray-400 text-sm">Typically respond within 24 hours</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form & Map Section -->
+    <section id="contact-form" class="py-16 bg-white px-6 animate-on-scroll">
+        <div class="max-w-[90rem] mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div>
+                    <div class="mb-10">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-2">Send Us a Message</h2>
+                        <p class="text-gray-600">Have a question? Fill out the form below and our team will get back to you within 24 hours.</p>
+                    </div>
+                    
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="first-name" class="block text-gray-700 mb-2">First Name *</label>
+                                <input type="text" id="first-name" required 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="last-name" class="block text-gray-700 mb-2">Last Name *</label>
+                                <input type="text" id="last-name" required 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="email" class="block text-gray-700 mb-2">Email Address *</label>
+                                <input type="email" id="email" required 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-gray-700 mb-2">Phone Number</label>
+                                <input type="tel" id="phone" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="reason" class="block text-gray-700 mb-2">Reason for Contact *</label>
+                            <select id="reason" required 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                <option value="" disabled selected>Select a reason</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="support">Customer Support</option>
+                                <option value="provider">Provider Support</option>
+                                <option value="business">Business Partnership</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="press">Press Inquiry</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-gray-700 mb-2">Your Message *</label>
+                            <textarea id="message" rows="5" required 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"></textarea>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="checkbox" id="consent" required class="w-5 h-5 text-green-500 focus:ring-green-500 rounded">
+                            <label for="consent" class="ml-2 text-gray-700">
+                                I consent to ServeX collecting my name, email, and phone to respond to my query.
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="w-full md:w-auto bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-300">
+                            <i class="fas fa-paper-plane mr-2"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Map & Support Hours -->
+                <div>
+                    <div class="mb-8 bg-green-50 rounded-xl p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Our Location</h3>
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.665456507126!2d-122.08374992417297!3d37.42221271552903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fba024a12ccef%3A0x5d4cae5d2bda3f39!2sGoogleplex!5e0!3m2!1sen!2sus!4v1598031592222!5m2!1sen!2sus" 
+                                width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                        </div>
+                        <p class="mt-4 text-gray-600">
+                            Visit our headquarters at 123 Service Avenue, Techville, CA 12345. Free visitor parking available.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gray-50 rounded-xl p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Support Hours</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-700">Monday - Friday</span>
+                                <span class="font-medium">8:00 AM - 8:00 PM</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-700">Saturday</span>
+                                <span class="font-medium">9:00 AM - 5:00 PM</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-700">Sunday</span>
+                                <span class="font-medium">Closed</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 pt-6 border-t border-gray-200">
+                            <h4 class="text-lg font-medium text-gray-800 mb-3">Need Immediate Help?</h4>
+                            <a href="tel:+18005551234" class="inline-flex items-center text-green-500 hover:text-green-600">
+                                <i class="fas fa-phone-alt mr-2"></i> Call (800) 555-1234
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departments Section -->
+    <section class="py-16 bg-gray-50 px-6">
+        <div class="max-w-[90rem] mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Contact the Right Department</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Direct your inquiry to the appropriate team to get the fastest response</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Department 1 -->
+                <div class="bg-white rounded-xl p-6 card">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6 text-green-500">
+                        <i class="fas fa-headset text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Customer Support</h3>
+                    <p class="text-gray-600 mb-4">
+                        Assistance with bookings, payments, and service issues.
+                    </p>
+                    <a href="mailto:support@servex.com" class="text-green-500 hover:text-green-600 flex items-center">
+                        <i class="fas fa-envelope mr-2"></i> support@servex.com
+                    </a>
+                </div>
+                
+                <!-- Department 2 -->
+                <div class="bg-white rounded-xl p-6 card">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6 text-green-500">
+                        <i class="fas fa-tools text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Provider Support</h3>
+                    <p class="text-gray-600 mb-4">
+                        For service professionals using our platform.
+                    </p>
+                    <a href="mailto:providers@servex.com" class="text-green-500 hover:text-green-600 flex items-center">
+                        <i class="fas fa-envelope mr-2"></i> providers@servex.com
+                    </a>
+                </div>
+                
+                <!-- Department 3 -->
+                <div class="bg-white rounded-xl p-6 card">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6 text-green-500">
+                        <i class="fas fa-handshake text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Business Partnerships</h3>
+                    <p class="text-gray-600 mb-4">
+                        For companies interested in collaborating.
+                    </p>
+                    <a href="mailto:partners@servex.com" class="text-green-500 hover:text-green-600 flex items-center">
+                        <i class="fas fa-envelope mr-2"></i> partners@servex.com
+                    </a>
+                </div>
+                
+                <!-- Department 4 -->
+                <div class="bg-white rounded-xl p-6 card">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6 text-green-500">
+                        <i class="fas fa-bullhorn text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Marketing & Press</h3>
+                    <p class="text-gray-600 mb-4">
+                        For media inquiries, interviews, and PR.
+                    </p>
+                    <a href="mailto:press@servex.com" class="text-green-500 hover:text-green-600 flex items-center">
+                        <i class="fas fa-envelope mr-2"></i> press@servex.com
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-white border-t border-gray-200 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Frequently Asked Questions</h2>
+                <p class="text-xl text-gray-600">Find quick answers to common questions about contacting us</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="border border-gray-200 rounded-xl overflow-hidden mb-6">
+                    <button class="accordion-toggle w-full flex justify-between items-center p-6 hover:bg-gray-50 focus:outline-none">
+                        <h3 class="text-lg font-medium text-left">What's the best way to reach customer support?</h3>
+                        <i class="fas fa-chevron-down text-green-500 transition-transform duration-200"></i>
+                    </button>
+                    <div class="accordion-content hidden px-6 pb-6 pt-0">
+                        <p class="text-gray-600">
+                            For immediate assistance, we recommend calling our customer support hotline at (800) 555-1234 during business hours (Mon-Fri 8am-8pm, Sat 9am-5pm PST). If your request is not urgent, you can email us at support@servex.com and we'll typically respond within 24 hours.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="border border-gray-200 rounded-xl overflow-hidden mb-6">
+                    <button class="accordion-toggle w-full flex justify-between items-center p-6 hover:bg-gray-50 focus:outline-none">
+                        <h3 class="text-lg font-medium text-left">How long does it take to get a response to my email?</h3>
+                        <i class="fas fa-chevron-down text-green-500 transition-transform duration-200"></i>
+                    </button>
+                    <div class="accordion-content hidden px-6 pb-6 pt-0">
+                        <p class="text-gray-600">
+                            Our team strives to respond to all inquiries within 24 business hours. For urgent matters, we recommend calling our support line during business hours. Responses during weekends and holidays may take longer.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="border border-gray-200 rounded-xl overflow-hidden mb-6">
+                    <button class="accordion-toggle w-full flex justify-between items-center p-6 hover:bg-gray-50 focus:outline-none">
+                        <h3 class="text-lg font-medium text-left">Can I visit your office in person?</h3>
+                        <i class="fas fa-chevron-down text-green-500 transition-transform duration-200"></i>
+                    </button>
+                    <div class="accordion-content hidden px-6 pb-6 pt-0">
+                        <p class="text-gray-600">
+                            Yes, our headquarters is located at 123 Service Avenue, Techville, CA 12345. We offer visitor parking and are open weekdays from 9am-5pm. We recommend scheduling an appointment ahead of time by calling our office or emailing visit@servex.com to ensure the right team members are available to assist you.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="border border-gray-200 rounded-xl overflow-hidden mb-6">
+                    <button class="accordion-toggle w-full flex justify-between items-center p-6 hover:bg-gray-50 focus:outline-none">
+                        <h3 class="text-lg font-medium text-left">How can service providers get support?</h3>
+                        <i class="fas fa-chevron-down text-green-500 transition-transform duration-200"></i>
+                    </button>
+                    <div class="accordion-content hidden px-6 pb-6 pt-0">
+                        <p class="text-gray-600">
+                            Service providers using our platform can contact our dedicated provider support team at providers@servex.com or call (800) 555-5678 during business hours. We also have a help center with resources specifically for providers including how-to guides, training materials, and troubleshooting.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <p class="text-gray-600 mb-4">Still have questions? We're here to help.</p>
+                <a href="#contact-form" class="inline-block bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-xl font-medium">
+                    <i class="fas fa-comments mr-2"></i> Chat with Support
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-24 pb-16 px-6">
+        <div class="max-w-[90rem] mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <!-- Company Info -->
+                <div class="order-1 md:order-none">
+                    <a href="#" class="flex items-center mb-6 hover:opacity-90 transition-opacity">
+                        <span class="text-2xl font-bold text-white">ServeX</span>
+                    </a>
+                    <p class="text-green-200 mb-6 leading-relaxed">
+                        Connecting you with trusted service professionals in your community since 2023.
+                    </p>
+                    <div class="flex space-x-5">
+                        <a href="#" class="text-green-300 hover:text-white transition-colors text-lg">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-green-300 hover:text-white transition-colors text-lg">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-green-300 hover:text-white transition-colors text-lg">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-green-300 hover:text-white transition-colors text-lg">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- For Customers -->
+                <div class="border-t border-green-800 pt-6 md:border-t-0 md:pt-0">
+                    <h4 class="text-xl font-bold mb-6 text-white flex items-center">
+                        <i class="fas fa-users mr-3 text-green-300"></i>
+                         For Customers
+                    </h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Browse Services
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> How It Works
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center" onclick="showDashboardModal()">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Customer Dashboard
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center" onclick="showBookingModal()">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Booking Flow
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Pricing
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <!-- For Providers -->
+                <div class="border-t border-green-800 pt-6 md:border-t-0 md:pt-0">
+                    <h4 class="text-xl font-bold mb-6 text-white flex items-center">
+                        <i class="fas fa-tools mr-3 text-green-300"></i>
+                         For Providers
+                    </h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Become a Provider
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center" onclick="showProviderModal()">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Provider Dashboard
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Service Areas
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Pricing & Fees
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Resources
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <!-- Company -->
+                <div class="border-t border-green-800 pt-6 md:border-t-0 md:pt-0">
+                    <h4 class="text-xl font-bold mb-6 text-white flex items-center">
+                        <i class="fas fa-building mr-3 text-green-300"></i>
+                         Company
+                    </h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> About Us
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Careers
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Press
+                        </a></li>
+                        <li><a href="contact.html" class="text-green-500 border-b border-green-500 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Contact
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Blog
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="border-t border-green-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <p class="text-green-300">© 2025 ServeX. All rights reserved.</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-green-300 hover:text-white transition-colors font-medium">Terms</a>
+                    <a href="#" class="text-green-300 hover:text-white transition-colors font-medium">Privacy</a>
+                    <a href="#" class="text-green-300 hover:text-white transition-colors font-medium">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Accordion functionality
+        document.querySelectorAll('.accordion-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const icon = button.querySelector('i');
+                const content = button.nextElementSibling;
+                
+                // Toggle icon rotation
+                icon.classList.toggle('rotate-180');
+                
+                // Toggle content visibility
+                content.classList.toggle('hidden');
+                
+                // Close other accordions
+                document.querySelectorAll('.accordion-toggle').forEach(otherButton => {
+                    if (otherButton !== button) {
+                        otherButton.querySelector('i').classList.remove('rotate-180');
+                        otherButton.nextElementSibling.classList.add('hidden');
+                    }
+                });
+            });
+        });
+        
+        // Form submission handling
+        document.querySelector('#contact-form form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Form validation would go here in a real implementation
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            
+            // Simulate submission
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                // Show success message
+                this.innerHTML = `
+                    <div class="text-center py-8">
+                        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6 mx-auto text-green-500">
+                            <i class="fas fa-check-circle text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Message Sent!</h3>
+                        <p class="text-gray-600 mb-6">Thank you for contacting us. Our team will get back to you within 24 business hours.</p>
+                        <button class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl font-medium" onclick="window.location.href='index.html'">
+                            <i class="fas fa-home mr-2"></i> Return to Homepage
+                        </button>
+                    </div>
+                `;
+            }, 1500);
+        });
+        
+        // Animation observer
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateOnScrollElements = document.querySelectorAll('.animate-on-scroll');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-up', 'opacity-100');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            animateOnScrollElements.forEach(element => {
+                observer.observe(element);
+                element.classList.add('opacity-0', 'transition-all', 'duration-500', 'ease-out');
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

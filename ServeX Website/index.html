@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServeX - Find Trusted Services Near You</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Section Dividers */
+        .wave-divider {
+            position: relative;
+            height: 60px;
+            width: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .wave-divider svg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+        }
+
+        .wave-flip {
+            transform: rotate(180deg);
+        }
+
+        .wave-green {
+            fill: #e8f5e9;
+        }
+
+        .wave-white {
+            fill: white;
+        }
+
+        .wave-gray-50 {
+            fill: #f9fafb; /* tailwind gray-50 */
+        }
+
+        .wave-gray-800 {
+            fill: #1f2937; /* tailwind gray-800 */
+        }
+
+        nav.scrolled {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+        .testimonial-card, .service-card {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.03);
+            border-radius: 12px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, box-shadow;
+        }
+        .testimonial-card:hover, .service-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05), 0 12px 28px rgba(0,0,0,0.08);
+        }
+        .nav-link {
+            transition: color 0.2s ease;
+        }
+        .nav-link:hover {
+            color: #5F9E63 !important;
+        }
+        .btn-primary, .btn-outline {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, background-color;
+            border-radius: 10px;
+        }
+        .btn-primary {
+            background-color: #3d8b40;
+        }
+        .btn-primary:hover {
+            background-color: #2d7a30;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 4px 12px rgba(95, 158, 99, 0.25);
+        }
+        .btn-outline {
+            border: 2px solid #5F9E63;
+        }
+        .btn-outline:hover {
+            background-color: #5F9E63;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(95, 158, 99, 0.15);
+        }
+        .feature-icon {
+            background-color: rgba(95, 158, 99, 0.08);
+            width: 64px;
+            height: 64px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .feature-icon:hover {
+            transform: scale(1.05);
+            background-color: rgba(95, 158, 99, 0.12);
+        }
+        input, select, textarea {
+            transition: all 0.2s ease;
+            border-radius: 10px !important;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #66bb6a !important;
+            box-shadow: 0 0 0 3px rgba(102, 187, 106, 0.2) !important;
+        }
+        .tab-active {
+            border-bottom: 3px solid #66bb6a;
+            color: #66bb6a;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Early Access Banner -->
+    <div class="bg-[#3d8b40] text-white py-2 px-4 sticky top-0 z-50 flex flex-wrap items-center justify-center gap-2" id="early-access-banner">
+        <span class="font-medium">Join our early access list:</span>
+        <form id="banner-early-access-form" class="flex gap-2">
+            <input type="email" name="email" placeholder="Your email" required 
+                   class="px-3 py-1 text-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-green-300">
+            <button type="submit" 
+                    class="bg-white text-green-600 px-3 py-1 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                Sign Up
+            </button>
+        </form>
+        <button class="ml-2 text-white hover:text-green-100" onclick="document.getElementById('early-access-banner').style.display='none'">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm py-3 px-6 z-50 transition-all duration-300">
+        <div class="max-w-[90rem] mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="#">
+                    <img src="https://i.imgur.com/YueOjCR.jpg" alt="ServeX Logo" class="h-48 rounded-lg">
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="text-gray-600 hover:text-green-500 nav-link font-medium">Home</a>
+                <a href="#services" class="text-gray-600 hover:text-green-500 nav-link font-medium">Services</a>
+                <a href="#providers" class="text-gray-600 hover:text-green-500 nav-link font-medium">Providers</a>
+                <a href="#how-it-works" class="text-gray-600 hover:text-green-500 nav-link font-medium">How It Works</a>
+            </div>
+            <div class="flex items-center">
+                <button class="md:hidden text-gray-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient py-16 md:py-24 px-6 animate-on-scroll">
+        <div class="max-w-[90rem] mx-auto">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-6">
+                        Find Trusted Services <span class="text-[#3d8b40]">Near You</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8">
+                        Connect with verified professionals for all your home service needs. Quality service, transparent pricing, and peace of mind.
+                    </p>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <div class="relative">
+                            <!-- HubSpot Form Integration -->
+                            <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 relative overflow-hidden">
+                                <div class="absolute top-0 right-0 -mr-6 -mt-6 w-24 h-24 rounded-full bg-green-100 opacity-20"></div>
+                                <div class="flex items-center justify-center w-16 h-16 mx-auto mb-6 rounded-full bg-green-100 text-green-500">
+                                    <i class="fas fa-envelope text-2xl"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-center text-gray-800 mb-3">Get Early Access</h3>
+                                <p class="text-gray-600 mb-6 text-center">Be the first to know when we launch in your area!</p>
+                                
+                                <!-- Updated HubSpot Embedded Form -->
+                                <div id="hubspot-early-access-form-container" class="space-y-4">
+                                    <!-- The HubSpot script will render the form into this div -->
+                                    <script src="https://js-na2.hsforms.net/forms/embed/243025758.js" defer></script>
+                                    <div class="hs-form-frame" data-region="na2" data-form-id="8cea0fc6-e1c3-474e-9ac5-1d6a293fdcb8" data-portal-id="243025758"></div>
+                                </div>
+                                <!-- End Updated HubSpot Embedded Form -->
+
+                                <p class="text-xs text-gray-500 text-center mt-4">
+                                    <i class="fas fa-lock mr-1 text-green-500"></i> We'll only contact you about launch updates. Unsubscribe anytime.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="absolute -z-10 w-full h-full bg-gradient-to-br from-green-100 to-green-50 rounded-2xl -bottom-2 -right-2 shadow-md"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Services -->
+    <section id="services" class="py-24 bg-gray-50 px-6 animate-on-scroll">
+        <div class="max-w-[90rem] mx-auto">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Popular Services</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                <div class="bg-white p-6 service-card cursor-pointer text-center">
+                    <div class="bg-green-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-faucet text-green-500 text-2xl"></i>
+                    </div>
+                    <p class="font-medium text-gray-700">Plumbing</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer text-center">
+                    <div class="bg-green-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-broom text-green-500 text-2xl"></i>
+                    </div>
+                    <p class="font-medium text-gray-700">Cleaning</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer text-center">
+                    <div class="bg-green-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-bolt text-green-500 text-2xl"></i>
+                    </div>
+                    <p class="font-medium text-gray-700">Electrical</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer text-center">
+                    <div class="bg-green-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-chalkboard-teacher text-green-500 text-2xl"></i>
+                    </div>
+                    <p class="font-medium text-gray-700">Tutoring</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer text-center">
+                    <div class="bg-green-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-truck-moving text-green-500 text-2xl"></i>
+                    </div>
+                    <p class="font-medium text-gray-700">Moving</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer text-center">
+                    <div class="bg-green-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-paint-roller text-green-500 text-2xl"></i>
+                    </div>
+                    <p class="font-medium text-gray-700">Painting</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <div class="bg-white py-8 px-6 shadow-sm">
+        <div class="max-w-[90rem] mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 mb-4 flex items-center justify-center bg-green-100 rounded-full">
+                        <i class="fas fa-user-check text-green-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">Verified Pros</h3>
+                    <p class="text-sm text-gray-600">Background-checked professionals</p>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 mb-4 flex items-center justify-center bg-blue-100 rounded-full">
+                        <i class="fas fa-lock text-blue-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">Secure Payments</h3>
+                    <p class="text-sm text-gray-600">PCI compliant, encrypted payments</p>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 mb-4 flex items-center justify-center bg-purple-100 rounded-full">
+                        <i class="fas fa-shield-alt text-purple-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">Privacy Protected</h3>
+                    <p class="text-sm text-gray-600">Your data stays safe with us</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <section class="py-28 bg-green-50 px-6 animate-on-scroll">
+        <div class="max-w-[90rem] mx-auto">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">What Our Customers Say</h2>
+            
+            <div class="relative">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="testimonial-carousel">
+                    <div class="bg-white p-8 rounded-xl testimonial-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 text-xl">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6">"Found an amazing plumber through ServeX who fixed my leaky faucet in no time. The platform made it so easy to compare prices and reviews."</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah J." class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <div class="flex items-center">
+                                    <h4 class="font-semibold text-gray-800">Sarah J.</h4>
+                                    <i class="fas fa-check-circle text-blue-500 ml-2" title="Verified Customer"></i>
+                                </div>
+                                <p class="text-gray-500 text-sm">Homeowner</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-8 rounded-xl testimonial-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 text-xl">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6">"As a busy mom, I love being able to book cleaning services with just a few taps. The providers are always professional and thorough."</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Maria L." class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <div class="flex items-center">
+                                    <h4 class="font-semibold text-gray-800">Maria L.</h4>
+                                    <i class="fas fa-check-circle text-blue-500 ml-2" title="Verified Customer"></i>
+                                </div>
+                                <p class="text-gray-500 text-sm">Busy Parent</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-8 rounded-xl testimonial-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 text-xl">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6">"The tutor I found for my son has been fantastic. The in-app messaging makes coordination easy, and I can see all the details in one place."</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="David K." class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <div class="flex items-center">
+                                    <h4 class="font-semibold text-gray-800">David K.</h4>
+                                    <i class="fas fa-check-circle text-blue-500 ml-2" title="Verified Customer"></i>
+                                </div>
+                                <p class="text-gray-500 text-sm">Parent</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl testimonial-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 text-xl">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6">"The electrician arrived right on time and fixed our wiring issues professionally. ServeX saved us so much hassle!"</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Robert T." class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <div class="flex items-center">
+                                    <h4 class="font-semibold text-gray-800">Robert T.</h4>
+                                    <i class="fas fa-check-circle text-blue-500 ml-2" title="Verified Customer"></i>
+                                </div>
+                                <p class="text-gray-500 text-sm">Homeowner</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl testimonial-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 text-xl">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6">"As a senior citizen, I appreciate how easy it is to book help through ServeX. The movers were so patient and careful with my belongings."</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Margaret W." class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <div class="flex items-center">
+                                    <h4 class="font-semibold text-gray-800">Margaret W.</h4>
+                                    <i class="fas fa-check-circle text-blue-500 ml-2" title="Verified Customer"></i>
+                                </div>
+                                <p class="text-gray-500 text-sm">Retiree</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl testimonial-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 text-xl">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6">"I've used ServeX for multiple services now - plumbing, cleaning and painting. Each experience has been excellent with professional providers."</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="James L." class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <div class="flex items-center">
+                                    <h4 class="font-semibold text-gray-800">James L.</h4>
+                                    <i class="fas fa-check-circle text-blue-500 ml-2" title="Verified Customer"></i>
+                                </div>
+                                <p class="text-gray-500 text-sm">Landlord</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl testimonial-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 text-xl">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6">"The handyman did an excellent job installing my new shelves and fixing my door. He was punctual, skilled, and left my place spotless."</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/women/52.jpg" alt="Emily R." class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <div class="flex items-center">
+                                    <h4 class="font-semibold text-gray-800">Emily R.</h4>
+                                    <i class="fas fa-check-circle text-blue-500 ml-2" title="Verified Customer"></i>
+                                </div>
+                                <p class="text-gray-500 text-sm">Apartment Renter</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl testimonial-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 text-xl">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6">"ServeX saved our family gathering by quickly finding a chef when ours canceled last minute. The food was amazing and the whole process stress-free."</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/men/68.jpg" alt="Thomas B." class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <div class="flex items-center">
+                                    <h4 class="font-semibold text-gray-800">Thomas B.</h4>
+                                    <i class="fas fa-check-circle text-blue-500 ml-2" title="Verified Customer"></i>
+                                </div>
+                                <p class="text-gray-500 text-sm">Event Planner</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl testimonial-card">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 text-xl">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6">"The dog walker I found through ServeX is absolutely wonderful with my golden retriever. Reliable and caring - couldn't ask for better pet care!"</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/women/77.jpg" alt="Jennifer K." class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <div class="flex items-center">
+                                    <h4 class="font-semibold text-gray-800">Jennifer K.</h4>
+                                    <i class="fas fa-check-circle text-blue-500 ml-2" title="Verified Customer"></i>
+                                </div>
+                                <p class="text-gray-500 text-sm">Pet Owner</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center mt-8 space-x-2">
+                    <button class="w-3 h-3 rounded-full bg-green-400" data-index="0"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300" data-index="3"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300" data-index="6"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Become a Provider -->
+    <section id="providers" class="py-24 bg-gradient-to-br from-[#3d8b40] to-[#2d7a30] text-white px-6 animate-on-scroll">
+        <div class="max-w-[90rem] mx-auto">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h2 class="text-3xl font-bold mb-6">Earn Money With Your Skills</h2>
+                    <p class="text-lg text-gray-300 mb-8">Join our network of trusted professionals and grow your business with ServeX. We handle the marketing, payments, and scheduling so you can focus on what you do best.</p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-3 text-xl"></i>
+                            <span>Set your own schedule and rates</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-3 text-xl"></i>
+                            <span>Get matched with customers in your area</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-3 text-xl"></i>
+                            <span>Secure payments with weekly payouts</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-3 text-xl"></i>
+                            <span>24/7 customer support</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="md:w-1/2 flex flex-col space-y-6 items-center">
+                    <div class="relative w-full max-w-sm">
+                        <img src="https://i.imgur.com/CYkJGfh.jpg" alt="Electrician arriving at door" class="rounded-xl shadow-xl w-full h-96 object-cover">
+                        <div class="absolute -z-10 w-full h-full bg-gray-200 rounded-xl -bottom-3 -right-3 opacity-50"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Preview (Modal) -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" id="dashboard-modal">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-screen overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Customer Dashboard</h3>
+                    <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="border-b border-gray-200 mb-6">
+                    <div class="flex space-x-8">
+                        <button class="py-3 px-1 font-medium text-gray-500 hover:text-green-500 tab-active">
+                            Upcoming
+                        </button>
+                        <button class="py-3 px-1 font-medium text-gray-500 hover:text-green-500">
+                            History
+                        </button>
+                        <button class="py-3 px-1 font-medium text-gray-500 hover:text-green-500">
+                            Messages
+                        </button>
+                        <button class="py-3 px-1 font-medium text-gray-500 hover:text-green-500">
+                            Saved
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Today's Booking</h4>
+                    <div class="bg-green-50 rounded-xl p-4 mb-4">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Provider" class="w-12 h-12 rounded-full mr-4">
+                                <div>
+                                    <h5 class="font-semibold text-gray-800">John D. - Plumbing</h5>
+                                    <p class="text-gray-600 text-sm">Fixing kitchen sink and faucet</p>
+                                    <div class="flex items-center mt-1">
+                                        <i class="fas fa-clock text-green-500 mr-2"></i>
+                                        <span class="text-sm text-gray-600">Today, 2:00 PM - 4:00 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="text-green-500 hover:text-green-700">
+                                <i class="fas fa-comment-dots text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Upcoming Services</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <div class="flex items-center">
+                                <div class="bg-green-100 w-10 h-10 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-broom text-green-500"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-gray-800">Home Cleaning</h5>
+                                    <p class="text-gray-600 text-sm">Sat, June 12 • 10:00 AM</p>
+                                </div>
+                            </div>
+                            <button class="text-gray-400 hover:text-gray-600">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <div class="flex items-center">
+                                <div class="bg-green-100 w-10 h-10 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-chalkboard-teacher text-green-500"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-gray-800">Math Tutoring</h5>
+                                    <p class="text-gray-600 text-sm">Mon, June 14 • 4:00 PM</p>
+                                </div>
+                            </div>
+                            <button class="text-gray-400 hover:text-gray-600">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Recent Messages</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Provider" class="w-10 h-10 rounded-full mr-4">
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h5 class="font-medium text-gray-800">Lisa M. - Cleaning</h5>
+                                    <span class="text-xs text-gray-500">2h ago</span>
+                                </div>
+                                <p class="text-gray-600 text-sm truncate">Hi there! Just confirming our appointment for Saturday at 10am...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Flow Preview (Modal) -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" id="booking-modal">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-screen overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Book a Service</h3>
+                    <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="mb-8">
+                    <div class="flex items-start mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Provider" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold text-gray-800">John D. - Plumbing</h4>
+                            <div class="flex items-center text-yellow-400 mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="text-gray-600 text-sm ml-2">4.7 (128 reviews)</span>
+                            </div>
+                            <p class="text-gray-600">Licensed plumber with 12 years experience. Specializes in faucet repairs, pipe leaks, and drain cleaning.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h5 class="font-semibold text-gray-800 mb-3">Select Service</h5>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-green-400 cursor-pointer">
+                                <div>
+                                    <h6 class="font-medium text-gray-800">Faucet Repair</h6>
+                                    <p class="text-gray-600 text-sm">Fix leaky or malfunctioning faucets</p>
+                                </div>
+                                <span class="font-semibold text-gray-800">$85</span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-green-400 cursor-pointer bg-green-50 border-green-400">
+                                <div>
+                                    <h6 class="font-medium text-gray-800">Pipe Leak Repair</h6>
+                                    <p class="text-gray-600 text-sm">Fix leaks in exposed pipes</p>
+                                </div>
+                                <span class="font-semibold text-gray-800">$120+</span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-green-400 cursor-pointer">
+                                <div>
+                                    <h6 class="font-medium text-gray-800">Drain Cleaning</h6>
+                                    <p class="text-gray-600 text-sm">Unclog slow or blocked drains</p>
+                                </div>
+                                <span class="font-semibold text-gray-800">$95</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h5 class="font-semibold text-gray-800 mb-3">Select Date & Time</h5>
+                        <div class="grid grid-cols-3 gap-3 mb-4">
+                            <button class="py-2 px-3 border border-gray-200 rounded-lg hover:border-green-400 text-sm">Today</button>
+                            <button class="py-2 px-3 border border-green-400 bg-green-50 rounded-lg text-sm">Tomorrow</button>
+                            <button class="py-2 px-3 border border-gray-200 rounded-lg hover:border-green-400 text-sm">Fri, Jun 11</button>
+                        </div>
+                        <div class="grid grid-cols-4 gap-3">
+                            <button class="py-2 px-3 border border-gray-200 rounded-lg hover:border-green-400 text-sm">9:00 AM</button>
+                            <button class="py-2 px-3 border border-gray-200 rounded-lg hover:border-green-400 text-sm">10:00 AM</button>
+                            <button class="py-2 px-3 border border-green-400 bg-green-50 rounded-lg text-sm">11:00 AM</button>
+                            <button class="py-2 px-3 border border-gray-200 rounded-lg hover:border-green-400 text-sm">1:00 PM</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h5 class="font-semibold text-gray-800 mb-3">Payment Method</h5>
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center">
+                                    <i class="fab fa-cc-visa text-3xl text-blue-800 mr-3"></i>
+                                    <span>Visa •••• 4242</span>
+                                </div>
+                                <button class="text-green-500 text-sm font-medium">Change</button>
+                            </div>
+                            <div class="flex justify-between items-center pt-3 border-t border-gray-200">
+                                <span class="text-gray-600">Total</span>
+                                <span class="font-bold text-gray-800">$120.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-medium">
+                        Confirm Booking
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Provider Dashboard Preview (Modal) -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" id="provider-modal">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-screen overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Provider Dashboard</h3>
+                    <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-green-50 rounded-xl p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-gray-800">Earnings</h4>
+                            <i class="fas fa-dollar-sign text-green-500 text-xl"></i>
+                        </div>
+                        <p class="text-2xl font-bold text-gray-800">$1,245.50</p>
+                        <p class="text-sm text-gray-600 mt-1">This week</p>
+                    </div>
+                    
+                    <div class="bg-blue-50 rounded-xl p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-gray-800">Bookings</h4>
+                            <i class="fas fa-calendar-alt text-blue-500 text-xl"></i>
+                        </div>
+                        <p class="text-2xl font-bold text-gray-800">8</p>
+                        <p class="text-sm text-gray-600 mt-1">Scheduled</p>
+                    </div>
+                    
+                    <div class="bg-purple-50 rounded-xl p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-gray-800">Rating</h4>
+                            <i class="fas fa-star text-yellow-400 text-xl"></i>
+                        </div>
+                        <p class="text-2xl font-bold text-gray-800">4.8</p>
+                        <p class="text-sm text-gray-600 mt-1">From 64 reviews</p>
+                    </div>
+                </div>
+                
+                <div class="border-b border-gray-200 mb-6">
+                    <div class="flex space-x-8">
+                        <button class="py-3 px-1 font-medium text-gray-500 hover:text-green-500 tab-active">
+                            Schedule
+                        </button>
+                        <button class="py-3 px-1 font-medium text-gray-500 hover:text-green-500">
+                            Requests
+                        </button>
+                        <button class="py-3 px-1 font-medium text-gray-500 hover:text-green-500">
+                            Messages
+                        </button>
+                        <button class="py-3 px-1 font-medium text-gray-500 hover:text-green-500">
+                            Earnings
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Today's Appointments</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                            <div class="flex items-center">
+                                <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Customer" class="w-12 h-12 rounded-full mr-4">
+                                <div>
+                                    <h5 class="font-semibold text-gray-800">Lisa M.</h5>
+                                    <p class="text-gray-600 text-sm">Home Cleaning</p>
+                                    <div class="flex items-center mt-1">
+                                        <i class="fas fa-clock text-green-500 mr-2 text-sm"></i>
+                                        <span class="text-sm text-gray-600">10:00 AM - 12:00 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="w-10 h-10 rounded-full bg-green-100 text-green-500 flex items-center justify-center">
+                                    <i class="fas fa-comment-dots"></i>
+                                </button>
+                                <button class="w-10 h-10 rounded-full bg-blue-100 text-blue-500 flex items-center justify-center">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                            <div class="flex items-center">
+                                <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Customer" class="w-12 h-12 rounded-full mr-4">
+                                <div>
+                                    <h5 class="font-semibold text-gray-800">Michael T.</h5>
+                                    <p class="text-gray-600 text-sm">Office Cleaning</p>
+                                    <div class="flex items-center mt-1">
+                                        <i class="fas fa-clock text-green-500 mr-2 text-sm"></i>
+                                        <span class="text-sm text-gray-600">2:00 PM - 4:00 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="w-10 h-10 rounded-full bg-green-100 text-green-500 flex items-center justify-center">
+                                    <i class="fas fa-comment-dots"></i>
+                                </button>
+                                <button class="w-10 h-10 rounded-full bg-blue-100 text-blue-500 flex items-center justify-center">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Service Requests</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                            <div class="flex items-center">
+                                <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Customer" class="w-12 h-12 rounded-full mr-4">
+                                <div>
+                                    <h5 class="font-semibold text-gray-800">Sarah J.</h5>
+                                    <p class="text-gray-600 text-sm">Deep Cleaning - 3 Bedroom Home</p>
+                                    <div class="flex items-center mt-1">
+                                        <i class="fas fa-clock text-green-500 mr-2 text-sm"></i>
+                                        <span class="text-sm text-gray-600">Sat, Jun 12 • Flexible timing</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="px-4 py-2 bg-green-500 text-white rounded-lg text-sm font-medium">
+                                    Accept
+                                </button>
+                                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">
+                                    Decline
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Download CTA & Join Our Journey -->
+    <section class="py-16 px-6 bg-gray-50 overflow-hidden">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col lg:flex-row items-center">
+                <!-- Text & Buttons -->
+                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-12 animate-fade-in-left">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-6">
+                        <span class="text-[#3d8b40]">ServeX</span> in Your Pocket
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8">
+                        Book services instantly, track providers in real-time, and manage all your bookings from anywhere. 
+                        Everything you need, right at your fingertips.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#" class="flex-none">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store" class="h-14 transition-all hover:opacity-90 hover:transform hover:scale-105">
+                        </a>
+                        <a href="#" class="flex-none">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" class="h-14 transition-all hover:opacity-90 hover:transform hover:scale-105">
+                        </a>
+                    </div>
+
+                    <div class="mt-8 flex items-center space-x-4">
+                        <div class="flex -space-x-2">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="User" class="w-10 h-10 rounded-full border-2 border-white">
+                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="User" class="w-10 h-10 rounded-full border-2 border-white">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="w-10 h-10 rounded-full border-2 border-white">
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Joined by <span class="font-semibold text-gray-800">5,000+</span> happy users</p>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="ml-1 text-gray-700 text-sm">4.8 (2.1K reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QR Code Placeholder -->
+                <div class="lg:w-1/2 relative animate-fade-in-right flex flex-col items-end">
+                    <div class="relative mr-0 lg:mr-10">
+                        <h3 class="text-3xl font-bold text-green-500 text-center mb-6 animate-pulse">
+                            COMING SOON...
+                        </h3>
+                        <div class="w-80 h-80 lg:w-96 lg:h-96 relative">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png" 
+                                 alt="Coming Soon QR Code" 
+                                 class="w-full h-full object-contain blur-md opacity-70 border-4 border-green-300">
+                        </div>
+                        <p class="text-lg text-green-500 text-center mt-4 font-medium">
+                            Scan to download our app soon!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .accordion-toggle i {
+            transition: transform 0.3s ease;
+        }
+        .accordion-toggle i.rotate-180 {
+            transform: rotate(180deg);
+        }
+        .animate-fade-up {
+            animation: fadeUp 0.6s ease-out forwards;
+        }
+        .animate-fade-in-left {
+            animation: fadeInLeft 0.8s ease-out forwards;
+        }
+        .animate-fade-in-right {
+            animation: fadeInRight 0.8s ease-out forwards;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+
+    <!-- FAQ Section -->
+    <section class="py-24 bg-white px-6">
+        
+
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Join Our Journey</h2>
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="text-green-500 text-3xl mb-3">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-1">Investors</h3>
+                    <p class="text-sm text-gray-600">Join our funding round</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="text-green-500 text-3xl mb-3">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-1">Advisors</h3>
+                    <p class="text-sm text-gray-600">Help shape our strategy</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="text-green-500 text-3xl mb-3">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-1">Supporters</h3>
+                    <p class="text-sm text-gray-600">Join our community</p>
+                </div>
+            </div>
+
+            <div class="max-w-md mx-auto">
+                <button class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg text-sm font-medium">
+                    Get in Touch
+                </button>
+            </div>
+        </div>
+    </section>
+
+        <div class="max-w-[90rem] mx-auto">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Frequently Asked Questions</h2>
+            <p class="text-lg text-center text-gray-600 mb-12 max-w-3xl mx-auto">Get answers to common questions about ServeX</p>
+
+            <div class="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+                <!-- Registration -->
+                <div class="border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="accordion-toggle w-full flex justify-between items-center p-6 hover:bg-gray-50 focus:outline-none">
+                        <h3 class="text-lg font-medium text-left">How do I sign up for ServeX?</h3>
+                        <i class="fas fa-chevron-down text-green-500 transition-transform duration-200"></i>
+                    </button>
+                    <div class="accordion-content hidden px-6 pb-6 pt-0">
+                        <p class="text-gray-600">Registration is simple and free. Here's what you need to do:</p>
+                        <ol class="list-decimal pl-5 mt-2 space-y-2 text-gray-600">
+                            <li>Enter your name, email and phone number</li>
+                            <li>Create a secure password</li>
+                            <li>Verify your account via email or SMS</li>
+                            <li>Complete your profile with required details</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Payments -->
+                <div class="border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="accordion-toggle w-full flex justify-between items-center p-6 hover:bg-gray-50 focus:outline-none">
+                        <h3 class="text-lg font-medium text-left">What payment methods do you accept?</h3>
+                        <i class="fas fa-chevron-down text-green-500 transition-transform duration-200"></i>
+                    </button>
+                    <div class="accordion-content hidden px-6 pb-6 pt-0">
+                        <p class="text-gray-600">We accept various secure payment methods:</p>
+                        <ul class="grid grid-cols-2 gap-2 mt-3">
+                            <li class="flex items-center text-gray-600"><i class="fab fa-cc-visa text-blue-800 mr-2"></i> Visa cards</li>
+                            <li class="flex items-center text-gray-600"><i class="fab fa-cc-mastercard text-red-500 mr-2"></i> Mastercard</li>
+                            <li class="flex items-center text-gray-600"><i class="fab fa-cc-amex text-blue-500 mr-2"></i> American Express</li>
+                            <li class="flex items-center text-gray-600"><i class="fab fa-paypal text-blue-600 mr-2"></i> PayPal</li>
+                        </ul>
+                        <p class="mt-3 text-gray-600 text-sm">All payments are processed securely with SSL encryption.</p>
+                    </div>
+                </div>
+
+                <!-- Safety -->
+                <div class="border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="accordion-toggle w-full flex justify-between items-center p-6 hover:bg-gray-50 focus:outline-none">
+                        <h3 class="text-lg font-medium text-left">How do you ensure safety?</h3>
+                        <i class="fas fa-chevron-down text-green-500 transition-transform duration-200"></i>
+                    </button>
+                    <div class="accordion-content hidden px-6 pb-6 pt-0">
+                        <p class="text-gray-600">At ServeX, your safety is our priority:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-2 text-gray-600">
+                            <li>Identity verification for all service providers</li>
+                            <li>Background checks and reference verification</li>
+                            <li>Transparent rating and review system</li>
+                            <li>Data protection with advanced encryption</li>
+                            <li>24/7 support to report any issues</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Pricing -->
+                <div class="border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="accordion-toggle w-full flex justify-between items-center p-6 hover:bg-gray-50 focus:outline-none">
+                        <h3 class="text-lg font-medium text-left">How does pricing work?</h3>
+                        <i class="fas fa-chevron-down text-green-500 transition-transform duration-200"></i>
+                    </button>
+                    <div class="accordion-content hidden px-6 pb-6 pt-0">
+                        <p class="text-gray-600">Our pricing system is transparent:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-2 text-gray-600">
+                            <li>Providers set their rates based on market standards</li>
+                            <li>You see the estimated price before booking</li>
+                            <li>Secure payment held until job completion</li>
+                            <li>No hidden fees - what you see is what you pay</li>
+                        </ul>
+                        <p class="mt-3 text-gray-600">ServeX charges a small service fee to ensure a secure experience.</p>
+                    </div>
+                </div>
+
+                <!-- Cancellations -->
+                <div class="border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="accordion-toggle w-full flex justify-between items-center p-6 hover:bg-gray-50 focus:outline-none">
+                        <h3 class="text-lg font-medium text-left">What if I need to cancel?</h3>
+                        <i class="fas fa-chevron-down text-green-500 transition-transform duration-200"></i>
+                    </button>
+                    <div class="accordion-content hidden px-6 pb-6 pt-0">
+                        <p class="text-gray-600">Our cancellation policy is fair:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-2 text-gray-600">
+                            <li><strong>Cancellation 24+ hours in advance:</strong> Full refund</li>
+                            <li><strong>Cancellation within 24 hours:</strong> Charge applied per provider's policy</li>
+                            <li><strong>Cancellation by provider:</strong> We help find a replacement or full refund</li>
+                        </ul>
+                        <p class="mt-3 text-gray-600">All cancellations are managed through the platform.</p>
+                    </div>
+                </div>
+
+                <!-- New FAQ Item -->
+                <div class="border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="accordion-toggle w-full flex justify-between items-center p-6 hover:bg-gray-50 focus:outline-none">
+                        <h3 class="text-lg font-medium text-left">What areas do you currently serve?</h3>
+                        <i class="fas fa-chevron-down text-green-500 transition-transform duration-200"></i>
+                    </button>
+                    <div class="accordion-content hidden px-6 pb-6 pt-0">
+                        <p class="text-gray-600">ServeX is currently available in these cities:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-2 text-gray-600">
+                            <li>New York, NY</li>
+                            <li>Los Angeles, CA</li>
+                            <li>Chicago, IL</li>
+                            <li>Houston, TX</li>
+                            <li>Phoenix, AZ</li>
+                        </ul>
+                        <p class="mt-3 text-gray-600">We're expanding rapidly! Sign up for our newsletter to be notified when we launch in your area.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+<p class="text-gray-600 mb-4">Didn't find the answer to your question?</p>
+<a href="contact.html" class="inline-block bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-full font-medium transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg">
+    Contact Us
+</a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Email Signup -->
+    <section class="py-24 bg-green-50 px-6">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Stay Updated</h2>
+            <p class="text-lg text-gray-600 mb-8">Sign up for our newsletter to get the latest updates, service tips, and exclusive offers.</p>
+            <form id="email-signup-form" class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+                <input type="email" name="email" placeholder="Enter your email" required class="flex-grow px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+                    Subscribe
+                </button>
+            </form>
+            <p class="mt-4 text-sm text-gray-500">We respect your privacy. Unsubscribe at any time.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-24 pb-16 px-6">
+        <div class="max-w-[90rem] mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <!-- Company Info -->
+                <div class="order-1 md:order-none">
+                    <a href="#" class="flex items-center mb-6 hover:opacity-90 transition-opacity">
+                        <span class="text-2xl font-bold text-white">ServeX</span>
+                    </a>
+                    <p class="text-green-200 mb-6 leading-relaxed">
+                        Connecting you with trusted service professionals in your community since 2023.
+                    </p>
+                    <div class="flex space-x-5">
+                        <a href="#" class="text-green-300 hover:text-white transition-colors text-lg">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-green-300 hover:text-white transition-colors text-lg">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- For Customers -->
+                <div class="border-t border-green-800 pt-6 md:border-t-0 md:pt-0">
+                    <h4 class="text-xl font-bold mb-6 text-white flex items-center">
+                        <i class="fas fa-users mr-3 text-green-300"></i> 
+                        For Customers
+                    </h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Browse Services
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> How It Works
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center" onclick="showDashboardModal()">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Customer Dashboard
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center" onclick="showBookingModal()">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Booking Flow
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Pricing
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <!-- For Providers -->
+                <div class="border-t border-green-800 pt-6 md:border-t-0 md:pt-0">
+                    <h4 class="text-xl font-bold mb-6 text-white flex items-center">
+                        <i class="fas fa-tools mr-3 text-green-300"></i> 
+                        For Providers
+                    </h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Become a Provider
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center" onclick="showProviderModal()">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Provider Dashboard
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Service Areas
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Pricing & Fees
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Resources
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <!-- Company -->
+                <div class="border-t border-green-800 pt-6 md:border-t-0 md:pt-0">
+                    <h4 class="text-xl font-bold mb-6 text-white flex items-center">
+                        <i class="fas fa-building mr-3 text-green-300"></i> 
+                        Company
+                    </h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> About Us
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Careers
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Press
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Contact
+                        </a></li>
+                        <li><a href="#" class="text-green-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-70"></i> Blog
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="border-t border-green-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <p class="text-green-300">© 2025 ServeX. All rights reserved.</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-green-300 hover:text-white transition-colors font-medium">Terms</a>
+                    <a href="#" class="text-green-300 hover:text-white transition-colors font-medium">Privacy</a>
+                    <a href="#" class="text-green-300 hover:text-white transition-colors font-medium">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Your existing SCRIPT_URL for Google Sheets integration
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzcqgtOLOPe4GNZlaPfUXic8DHvso4Og6HTWer1bHfyi6LT_ymNfM37D7IkDP8_h2o/exec';
+
+        /**
+         * Generic function to handle form submission to Google Apps Script.
+         * @param {HTMLFormElement} form The form element to submit.
+         * @param {HTMLElement} submitBtn The submit button element.
+         * @param {string} originalBtnText The original text of the submit button.
+         */
+        async function handleSubmitForm(form, submitBtn, originalBtnText) {
+            const formData = new FormData(form);
+            formData.append('timestamp', new Date().toISOString()); // Add timestamp
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+
+            try {
+                // Send the raw multipart/form-data; skip pre-flight (important for Apps Script)
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors' // Crucial for cross-origin form submissions to Google Apps Script
+                });
+
+                // Note: Due to 'no-cors' mode, we cannot directly read the response.
+                // SweetAlert is used for client-side feedback. The Apps Script still receives the data.
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Your information has been submitted successfully. Thank you!',
+                    confirmButtonColor: '#3d8b40',
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+
+                form.reset(); // Clear form fields
+            } catch (error) {
+                console.error('Submission error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong with your submission. Please try again later.',
+                    confirmButtonColor: '#3d8b40'
+                });
+            } finally {
+                // Reset button state
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            }
+        }
+
+        // Removed the event listener for 'early-access-form'
+        // since it is now replaced by the HubSpot embedded form.
+
+        // Early Access Banner Form Submission
+        const bannerEarlyAccessForm = document.getElementById('banner-early-access-form');
+        if (bannerEarlyAccessForm) { // Check if the element exists
+            bannerEarlyAccessForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerHTML;
+                
+                await handleSubmitForm(this, submitBtn, originalBtnText);
+
+                // Temporarily hide the banner after submission
+                const banner = document.getElementById('early-access-banner');
+                if (banner) { // Ensure banner exists before manipulating
+                    banner.innerHTML = `
+                        <div class="flex items-center text-center mx-auto">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            <span>Thanks for signing up! We'll be in touch soon.</span>
+                        </div>
+                    `;
+                    setTimeout(() => banner.style.display = 'none', 3000);
+                }
+            });
+        }
+
+        // Email Signup Form Submission (Footer/Bottom Section)
+        const emailSignupForm = document.getElementById('email-signup-form');
+        if (emailSignupForm) { // Check if the element exists
+            emailSignupForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerHTML;
+                
+                await handleSubmitForm(this, submitBtn, originalBtnText);
+            });
+        }
+
+        // Scroll animation handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateOnScrollElements = document.querySelectorAll('.animate-on-scroll');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-up', 'opacity-100');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            animateOnScrollElements.forEach(element => {
+                observer.observe(element);
+                element.classList.add('opacity-0', 'transition-all', 'duration-500', 'ease-out');
+            });
+        });
+
+        // Modal functions
+        function showDashboardModal() {
+            const dashboardModal = document.getElementById('dashboard-modal');
+            if (dashboardModal) {
+                dashboardModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function showBookingModal() {
+            const bookingModal = document.getElementById('booking-modal');
+            if (bookingModal) {
+                bookingModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function showProviderModal() {
+            const providerModal = document.getElementById('provider-modal');
+            if (providerModal) {
+                providerModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeModal() {
+            const dashboardModal = document.getElementById('dashboard-modal');
+            const bookingModal = document.getElementById('booking-modal');
+            const providerModal = document.getElementById('provider-modal');
+
+            if (dashboardModal) dashboardModal.classList.add('hidden');
+            if (bookingModal) bookingModal.classList.add('hidden');
+            if (providerModal) providerModal.classList.add('hidden');
+            
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const dashboardModal = document.getElementById('dashboard-modal');
+            const bookingModal = document.getElementById('booking-modal');
+            const providerModal = document.getElementById('provider-modal');
+
+            if (dashboardModal && event.target === dashboardModal) {
+                closeModal();
+            }
+            if (bookingModal && event.target === bookingModal) {
+                closeModal();
+            }
+            if (providerModal && event.target === providerModal) {
+                closeModal();
+            }
+        }
+        // Enhanced testimonial carousel functionality
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('#testimonial-carousel > div');
+        const visibleTestimonials = 3; // Number of testimonials to show at once
+        const totalTestimonials = testimonials.length;
+        const totalPages = Math.ceil(totalTestimonials / visibleTestimonials);
+        
+        function showTestimonial(startIndex) {
+            if (startIndex >= totalTestimonials) startIndex = 0;
+            if (startIndex < 0) startIndex = totalTestimonials - visibleTestimonials;
+            
+            // Hide all testimonials first
+            testimonials.forEach(testimonial => {
+                testimonial.style.display = 'none';
+            });
+            
+            // Show the current set of testimonials
+            for (let i = 0; i < visibleTestimonials; i++) {
+                const index = startIndex + i;
+                if (index < totalTestimonials) {
+                    testimonials[index].style.display = 'block';
+                }
+            }
+            
+            // Update indicators
+            const indicators = document.querySelectorAll('.flex.justify-center.mt-8 button');
+            const currentPage = Math.floor(startIndex / visibleTestimonials);
+            indicators.forEach((indicator, i) => {
+                if (i === currentPage % totalPages) {
+                    indicator.classList.remove('bg-gray-300');
+                    indicator.classList.add('bg-green-400');
+                } else {
+                    indicator.classList.remove('bg-green-400');
+                    indicator.classList.add('bg-gray-300');
+                }
+            });
+        }
+        
+        // Initialize carousel to show first 3 testimonials if testimonials exist
+        if (testimonials.length > 0) {
+            showTestimonial(0);
+        }
+        
+        // Add click events to indicators if they exist
+        document.querySelectorAll('.flex.justify-center.mt-8 button').forEach((button) => {
+            button.addEventListener('click', () => {
+                const index = parseInt(button.getAttribute('data-index'));
+                currentTestimonial = index;
+                showTestimonial(currentTestimonial);
+            });
+        });
+        
+        // Auto-rotate testimonials only if there are enough testimonials to rotate
+        if (totalTestimonials > visibleTestimonials) {
+            setInterval(() => {
+                currentTestimonial += visibleTestimonials;
+                if (currentTestimonial >= totalTestimonials) {
+                    currentTestimonial = 0;
+                }
+                showTestimonial(currentTestimonial);
+            }, 5000);
+        }
+        
+
+        // FAQ Accordion functionality
+        document.querySelectorAll('.accordion-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const icon = button.querySelector('i');
+                const content = button.nextElementSibling;
+                
+                // Toggle icon rotation
+                if (icon) { // Check if icon exists
+                    icon.classList.toggle('rotate-180');
+                }
+                
+                // Toggle content visibility
+                if (content) { // Check if content exists
+                    content.classList.toggle('hidden');
+                }
+
+                // Close other accordions
+                document.querySelectorAll('.accordion-toggle').forEach(otherButton => {
+                    if (otherButton !== button) {
+                        const otherIcon = otherButton.querySelector('i');
+                        const otherContent = otherButton.nextElementSibling;
+                        if (otherIcon) otherIcon.classList.remove('rotate-180');
+                        if (otherContent) otherContent.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- Optional: HubSpot Tracking Code (if not already included by a HubSpot form) -->
+    <!-- This is generally recommended to be placed just before the closing </body> tag -->
+    <!-- <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/YOUR_HUBSPOT_ID.js"></script> -->
+</body>
+</html>
