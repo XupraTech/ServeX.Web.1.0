@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
     <style>
         /* Section Dividers */
         .wave-divider {
@@ -201,7 +202,7 @@
     </nav>
 
     <!-- Contact Hero Section -->
-    <section class="contact-gradient py-16 md:py-20 px-6 relative overflow-hidden animate-on-scroll">
+    <section class="contact-gradient py-16 md:py-20 px-6 relative overflow-hidden" data-aos="fade-up">
         <div class="shape shape-1" data-speed="25"></div>
         <div class="shape shape-2" data-speed="40"></div>
         <div class="max-w-[90rem] mx-auto text-center relative">
@@ -288,7 +289,7 @@
     </section>
 
     <!-- Contact Form & Map Section -->
-    <section id="contact-form" class="py-16 bg-white px-6 animate-on-scroll">
+    <section id="contact-form" class="py-16 bg-white px-6" data-aos="fade-up">
         <div class="max-w-[90rem] mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <!-- Contact Form -->
@@ -401,7 +402,7 @@
     </section>
 
     <!-- Departments Section -->
-    <section class="py-16 bg-gray-50 px-6">
+    <section class="py-16 bg-gray-50 px-6" data-aos="fade-up">
         <div class="max-w-[90rem] mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4">Contact the Right Department</h2>
@@ -469,7 +470,7 @@
     </section>
 
     <!-- FAQ Section -->
-    <section class="py-16 bg-white border-t border-gray-200 px-6">
+    <section class="py-16 bg-white border-t border-gray-200 px-6" data-aos="fade-up">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4">Frequently Asked Questions</h2>
@@ -704,28 +705,6 @@
                 `;
             }, 1500);
         });
-        
-        // Animation observer
-        document.addEventListener('DOMContentLoaded', function() {
-            const animateOnScrollElements = document.querySelectorAll('.animate-on-scroll');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-fade-up', 'opacity-100');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.1
-            });
-            
-            animateOnScrollElements.forEach(element => {
-                observer.observe(element);
-                element.classList.add('opacity-0', 'transition-all', 'duration-500', 'ease-out');
-            });
-        });
-        
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -747,6 +726,10 @@
                 shape.style.transform = `translate(${x}px, ${y}px)`;
             });
         });
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
     </script>
 </body>
 </html>

@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
     <style>
         /* Section Dividers */
         .wave-divider {
@@ -178,7 +179,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero-gradient py-16 md:py-24 px-6 relative overflow-hidden animate-on-scroll">
+    <section id="home" class="hero-gradient py-16 md:py-24 px-6 relative overflow-hidden" data-aos="fade-up">
         <div class="shape shape-1" data-speed="25"></div>
         <div class="shape shape-2" data-speed="40"></div>
         <div class="max-w-[90rem] mx-auto relative">
@@ -224,7 +225,7 @@
     </section>
 
     <!-- Popular Services -->
-    <section id="services" class="py-24 bg-gray-50 px-6 animate-on-scroll">
+    <section id="services" class="py-24 bg-gray-50 px-6" data-aos="fade-up">
         <div class="max-w-[90rem] mx-auto">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Popular Services</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
@@ -298,7 +299,7 @@
     </div>
 
     <!-- Testimonials -->
-    <section class="py-28 bg-green-50 px-6 animate-on-scroll">
+    <section class="py-28 bg-green-50 px-6" data-aos="fade-up">
         <div class="max-w-[90rem] mx-auto">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">What Our Customers Say</h2>
             
@@ -516,7 +517,7 @@
     </section>
 
     <!-- Become a Provider -->
-    <section id="providers" class="py-24 bg-gradient-to-br from-[#3d8b40] to-[#2d7a30] text-white px-6 animate-on-scroll">
+    <section id="providers" class="py-24 bg-gradient-to-br from-[#3d8b40] to-[#2d7a30] text-white px-6" data-aos="fade-up">
         <div class="max-w-[90rem] mx-auto">
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-10 md:mb-0">
@@ -887,7 +888,7 @@
     </div>
 
     <!-- App Download CTA & Join Our Journey -->
-    <section class="py-16 px-6 bg-gray-50 overflow-hidden">
+    <section class="py-16 px-6 bg-gray-50 overflow-hidden" data-aos="fade-up">
         <div class="max-w-6xl mx-auto">
             <div class="flex flex-col lg:flex-row items-center">
                 <!-- Text & Buttons -->
@@ -998,7 +999,7 @@
     </style>
 
     <!-- FAQ Section -->
-    <section class="py-24 bg-white px-6">
+    <section class="py-24 bg-white px-6" data-aos="fade-up">
         
 
         <div class="max-w-4xl mx-auto text-center">
@@ -1161,7 +1162,7 @@
     </section>
 
     <!-- Email Signup -->
-    <section class="py-24 bg-green-50 px-6">
+    <section class="py-24 bg-green-50 px-6" data-aos="fade-up">
         <div class="max-w-3xl mx-auto text-center">
             <h2 class="text-3xl font-bold text-gray-800 mb-4">Stay Updated</h2>
             <p class="text-lg text-gray-600 mb-8">Sign up for our newsletter to get the latest updates, service tips, and exclusive offers.</p>
@@ -1378,20 +1379,7 @@
                 
                 await handleSubmitForm(this, submitBtn, originalBtnText);
             });
-        }
-
-        // Scroll animation handler
-        document.addEventListener('DOMContentLoaded', function() {
-            const animateOnScrollElements = document.querySelectorAll('.animate-on-scroll');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-fade-up', 'opacity-100');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
+        }            }, {
                 threshold: 0.1
             });
 
@@ -1555,6 +1543,10 @@
                 shape.style.transform = `translate(${x}px, ${y}px)`;
             });
         });
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
     </script>
 
     <!-- Optional: HubSpot Tracking Code (if not already included by a HubSpot form) -->
