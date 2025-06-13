@@ -139,6 +139,7 @@
             position: absolute;
             pointer-events: none;
             transition: transform 0.2s ease-out;
+            will-change: transform;
         }
         .shape-1 {
             width: 180px;
@@ -738,14 +739,36 @@
             });
         });
 
-        // Simple parallax effect for hero shapes
-        document.addEventListener('mousemove', function(e) {
-            document.querySelectorAll('.shape').forEach(shape => {
-                const speed = parseFloat(shape.dataset.speed) || 20;
-                const x = (window.innerWidth / 2 - e.clientX) / speed;
-                const y = (window.innerHeight / 2 - e.clientY) / speed;
-                shape.style.transform = `translate(${x}px, ${y}px)`;
+        // Enhanced parallax effect for hero shapes with rotation for the
+        // top-left square
+        document.addEventListener('DOMContentLoaded', () => {
+            const shapes = document.querySelectorAll('.shape');
+            const positions = new Map();
+            shapes.forEach(s => positions.set(s, { x: 0, y: 0 }));
+
+            document.addEventListener('mousemove', e => {
+                shapes.forEach(shape => {
+                    const speed = parseFloat(shape.dataset.speed) || 20;
+                    const x = (window.innerWidth / 2 - e.clientX) / speed;
+                    const y = (window.innerHeight / 2 - e.clientY) / speed;
+                    positions.set(shape, { x, y });
+                });
             });
+
+            let angle = 0;
+            function animate() {
+                angle += 0.5; // slow rotation
+                shapes.forEach(shape => {
+                    const pos = positions.get(shape) || { x: 0, y: 0 };
+                    let transform = `translate(${pos.x}px, ${pos.y}px)`;
+                    if (shape.classList.contains('shape-1')) {
+                        transform += ` rotate(${angle}deg)`;
+                    }
+                    shape.style.transform = transform;
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
         });
     </script>
 </body>
